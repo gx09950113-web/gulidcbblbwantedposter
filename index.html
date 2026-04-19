@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>錢包比臉薄緝拿令 - 懸賞名單</title>
+    <title>錢包比臉薄緝拿令</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <h1 class="board-title">內部懸賞名單</h1>
+    <h1 class="board-title">內部懸賞：線索追蹤</h1>
 
-    <div id="member-list" class="container"></div>
+    <div class="wall-wrapper">
+        <svg id="svg-canvas"></svg>
+        
+        <div id="member-list" class="container"></div>
+    </div>
 
     <div id="myModal" class="modal" onclick="closeModal()">
         <div class="modal-content">
-            <img id="wanted-img" src="" alt="通緝令內容">
+            <img id="wanted-img" src="" alt="緝拿令">
         </div>
     </div>
 
