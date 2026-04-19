@@ -1,66 +1,70 @@
-// 成員名單
-const members = ['jinan', 'joker', 'kally', 'moshue', 'whoareyou', 'yechen', 'yishuan'];
+// 成員名單自定義：id 為圖片檔名，name 為網頁顯示名稱
+const members = [
+    { id: 'jinan', name: '程錦安' },
+    { id: 'joker', name: '揪可有點火' },
+    { id: 'kally', name: '巴太太挖系凱利' },
+    { id: 'moshue', name: '點墨雪' },
+    { id: 'whoareyou', name: '寧桂〇' },
+    { id: 'yechen', name: '顧燁晨' },
+    { id: 'yishuan', name: '卞逸軒' }
+];
 
 const listContainer = document.getElementById('member-list');
 const svgCanvas = document.getElementById('svg-canvas');
 const modal = document.getElementById('myModal');
 const wantedImg = document.getElementById('wanted-img');
 
-// 初始化
+// 初始化：產生角色卡片
 function init() {
-    // 1. 產生角色卡片
-    members.forEach(name => {
+    members.forEach(member => {
         const card = document.createElement('div');
         card.className = 'avatar-card';
+        
+        // 使用 member.id 讀取圖片，使用 member.name 顯示文字
         card.innerHTML = `
-            <img src="assets/images/${name}.png" class="avatar-img" alt="${name}">
-            <div class="member-name">${name}</div>
+            <img src="assets/images/${member.id}.png" class="avatar-img" alt="${member.name}">
+            <div class="member-name">${member.name}</div>
         `;
-        // 點擊事件：開啟通緝令
+        
+        // 點擊開啟通緝令 (assets/images/檔名_wanted.png)
         card.onclick = (e) => {
             e.stopPropagation();
-            openModal(`assets/images/${name}_wanted.png`);
+            openModal(`assets/images/${member.id}_wanted.png`);
         };
         listContainer.appendChild(card);
     });
 
-    // 2. 繪製連線（需等圖片載入完成，位置才準確）
+    // 繪製連線邏輯
     window.addEventListener('load', drawLines);
     window.addEventListener('resize', drawLines);
 }
 
-// 繪製紅色連線邏輯
+// 繪製紅色連線
 function drawLines() {
     const cards = document.querySelectorAll('.avatar-card');
     if (cards.length < 2) return;
 
-    svgCanvas.innerHTML = ''; // 清空畫布
-    
-    // 取得畫布相對於頁面的座標
+    svgCanvas.innerHTML = ''; 
     const canvasRect = svgCanvas.getBoundingClientRect();
 
     for (let i = 0; i < cards.length - 1; i++) {
         const rect1 = cards[i].querySelector('.avatar-img').getBoundingClientRect();
         const rect2 = cards[i+1].querySelector('.avatar-img').getBoundingClientRect();
 
-        // 計算兩個中心點位置（扣除畫布位移與捲軸）
         const x1 = rect1.left + rect1.width / 2 - canvasRect.left + window.scrollX;
         const y1 = rect1.top + rect1.height / 2 - canvasRect.top + window.scrollY;
         const x2 = rect2.left + rect2.width / 2 - canvasRect.left + window.scrollX;
         const y2 = rect2.top + rect2.height / 2 - canvasRect.top + window.scrollY;
 
-        // 建立 SVG Line
         const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
         line.setAttribute("x1", x1);
         line.setAttribute("y1", y1);
         line.setAttribute("x2", x2);
         line.setAttribute("y2", y2);
-        
-        // 設定紅線樣式
-        line.setAttribute("stroke", "#cc0000"); // 警方辦案用的深紅色
+        line.setAttribute("stroke", "#cc0000"); 
         line.setAttribute("stroke-width", "3");
-        line.setAttribute("stroke-dasharray", "4,2"); // 虛線感，更有連線氛圍
-        line.setAttribute("opacity", "0.7");
+        line.setAttribute("stroke-dasharray", "5,3"); 
+        line.setAttribute("opacity", "0.6");
 
         svgCanvas.appendChild(line);
     }
@@ -70,13 +74,12 @@ function drawLines() {
 function openModal(imgSrc) {
     wantedImg.src = imgSrc;
     modal.style.display = "flex";
-    document.body.style.overflow = "hidden"; // 開啟時禁止頁面捲動
+    document.body.style.overflow = "hidden";
 }
 
 function closeModal() {
     modal.style.display = "none";
-    document.body.style.overflow = "auto"; // 關閉時恢復捲動
+    document.body.style.overflow = "auto";
 }
 
-// 執行
 init();
