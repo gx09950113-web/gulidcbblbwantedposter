@@ -3,121 +3,126 @@ body {
     background: url('../assets/images/background.png') no-repeat center center fixed;
     background-size: cover;
     margin: 0;
-    font-family: "Microsoft JhengHei", sans-serif;
+    font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
     color: white;
-    overflow-x: hidden; /* 防止連線超出邊界產生捲動條 */
+    overflow-x: hidden;
 }
 
 .board-title {
     text-align: center;
-    font-size: 42px;
-    margin: 40px 0;
-    text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
-    letter-spacing: 3px;
+    font-size: clamp(32px, 5vw, 48px); /* 隨螢幕大小縮放字體 */
+    margin: 50px 0;
+    text-shadow: 4px 4px 12px rgba(0,0,0,0.9);
+    letter-spacing: 4px;
+    font-weight: bold;
 }
 
 /* 辦案牆區域 */
 .wall-wrapper {
     position: relative;
     width: 100%;
-    min-height: 600px;
+    min-height: 700px;
 }
 
-/* SVG 連線畫布：鋪在頭像下方 */
+/* SVG 連線 */
 #svg-canvas {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* 讓線條不會擋住點擊 */
+    pointer-events: none;
     z-index: 1;
 }
 
-/* 頭像容器 */
+/* 容器佈局 */
 .container {
     position: relative;
     z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 50px;
-    padding: 100px 20px;
-    flex-wrap: wrap; /* 如果寬度不夠會自動換行，線條也會跟著走 */
+    gap: 60px;
+    padding: 120px 40px;
+    flex-wrap: wrap;
 }
 
-/* 頭像卡片 */
+/* 角色卡片 */
 .avatar-card {
     position: relative;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     text-align: center;
 }
 
-/* 偶數項：下移 */
-.avatar-card:nth-child(even) {
-    transform: translateY(80px);
-}
+/* 交錯效果 */
+.avatar-card:nth-child(even) { transform: translateY(90px); }
+.avatar-card:nth-child(odd) { transform: translateY(-40px); }
 
-/* 奇數項：上移 */
-.avatar-card:nth-child(odd) {
-    transform: translateY(-40px);
-}
-
-/* 滑鼠經過時稍微放大 */
 .avatar-card:hover {
-    transform: scale(1.1) !important;
+    transform: scale(1.15) !important;
     z-index: 10;
 }
 
+/* 角色頭像圖片 */
 .avatar-img {
-    width: 130px;
-    height: 130px;
-    border: 5px solid #fff;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
-    background-color: #222;
+    width: 140px;
+    height: 140px;
+    border: 6px solid #fefefe;
+    box-shadow: 8px 8px 20px rgba(0,0,0,0.7);
+    background-color: #1a1a1a;
     object-fit: cover;
-    /* 增加一點點旋轉感，像隨意釘上去的 */
 }
 
-.avatar-card:nth-child(2n) .avatar-img { transform: rotate(3deg); }
-.avatar-card:nth-child(2n+1) .avatar-img { transform: rotate(-3deg); }
+/* 隨機旋轉感 */
+.avatar-card:nth-child(3n) .avatar-img { transform: rotate(4deg); }
+.avatar-card:nth-child(3n+1) .avatar-img { transform: rotate(-3deg); }
 
+/* 角色名字標籤 */
 .member-name {
-    margin-top: 10px;
+    margin-top: 15px;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 5px 15px;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 18px;
     font-weight: bold;
-    text-shadow: 2px 2px 4px #000;
-    text-transform: capitalize;
+    color: #ffd700; /* 金黃色字體 */
+    text-shadow: 1px 1px 2px #000;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* 彈窗樣式 */
 .modal {
     display: none;
     position: fixed;
-    z-index: 999;
+    z-index: 9999;
     left: 0; top: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0, 0, 0, 0.92);
     justify-content: center;
     align-items: center;
     cursor: zoom-out;
 }
 
 .modal-content img {
-    max-height: 90vh;
-    border: 8px solid #ddd;
-    animation: pop 0.3s ease-out;
+    max-height: 85vh;
+    max-width: 90vw;
+    border: 10px solid #eee;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    animation: pop 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 @keyframes pop {
-    from { transform: scale(0.8); opacity: 0; }
+    from { transform: scale(0.7); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
-/* 頁尾版權 */
+/* 頁尾 */
 .footer {
     text-align: center;
-    padding: 60px 0 30px 0;
-    color: rgba(255,255,255,0.7);
+    padding: 100px 0 40px 0;
+    color: rgba(255,255,255,0.6);
     font-size: 14px;
+    letter-spacing: 1px;
 }
