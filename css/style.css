@@ -1,20 +1,31 @@
+/* 1. 載入自定義 TTF 字體 */
+@font-face {
+    font-family: 'MasaFont';
+    /* 路徑：從 css 資料夾跳出來，進入 assets/fonts/ */
+    src: url('../assets/fonts/MasaFont-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* 全域設定 */
 body {
     background: url('../assets/images/background.png') no-repeat center center fixed;
     background-size: cover;
     margin: 0;
-    font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+    font-family: 'MasaFont', "Microsoft JhengHei", sans-serif;
     color: white;
     overflow-x: hidden;
 }
 
 .board-title {
+    font-family: 'MasaFont', sans-serif;
     text-align: center;
-    font-size: clamp(32px, 5vw, 48px); /* 隨螢幕大小縮放字體 */
+    font-size: clamp(36px, 6vw, 56px);
     margin: 50px 0;
     text-shadow: 4px 4px 12px rgba(0,0,0,0.9);
     letter-spacing: 4px;
     font-weight: bold;
+    color: #f1f1f1;
 }
 
 /* 辦案牆區域 */
@@ -24,7 +35,7 @@ body {
     min-height: 700px;
 }
 
-/* SVG 連線 */
+/* SVG 連線畫布 */
 #svg-canvas {
     position: absolute;
     top: 0;
@@ -55,7 +66,7 @@ body {
     text-align: center;
 }
 
-/* 交錯效果 */
+/* 上下交錯效果 */
 .avatar-card:nth-child(even) { transform: translateY(90px); }
 .avatar-card:nth-child(odd) { transform: translateY(-40px); }
 
@@ -80,14 +91,15 @@ body {
 
 /* 角色名字標籤 */
 .member-name {
+    font-family: 'MasaFont', sans-serif;
     margin-top: 15px;
     background: rgba(0, 0, 0, 0.75);
-    padding: 5px 15px;
+    padding: 6px 18px;
     border-radius: 4px;
     display: inline-block;
-    font-size: 18px;
+    font-size: 22px; /* 字體換了之後通常可以大一點 */
     font-weight: bold;
-    color: #ffd700; /* 金黃色字體 */
+    color: #ffd700; 
     text-shadow: 1px 1px 2px #000;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -120,9 +132,10 @@ body {
 
 /* 頁尾 */
 .footer {
+    font-family: 'MasaFont', sans-serif;
     text-align: center;
     padding: 100px 0 40px 0;
     color: rgba(255,255,255,0.6);
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1px;
 }
