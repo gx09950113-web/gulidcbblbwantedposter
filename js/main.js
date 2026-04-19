@@ -1,4 +1,4 @@
-// 成員名單自定義：id 為圖片檔名，name 為網頁顯示名稱
+// 正式公會通緝名單
 const members = [
     { id: 'jinan', name: '程錦安' },
     { id: 'joker', name: '揪可有點火' },
@@ -20,13 +20,12 @@ function init() {
         const card = document.createElement('div');
         card.className = 'avatar-card';
         
-        // 使用 member.id 讀取圖片，使用 member.name 顯示文字
         card.innerHTML = `
             <img src="assets/images/${member.id}.png" class="avatar-img" alt="${member.name}">
             <div class="member-name">${member.name}</div>
         `;
         
-        // 點擊開啟通緝令 (assets/images/檔名_wanted.png)
+        // 點擊開啟對應的通緝令 (例如 assets/images/jinan_wanted.png)
         card.onclick = (e) => {
             e.stopPropagation();
             openModal(`assets/images/${member.id}_wanted.png`);
@@ -34,12 +33,17 @@ function init() {
         listContainer.appendChild(card);
     });
 
-    // 繪製連線邏輯
-    window.addEventListener('load', drawLines);
+    // 等待頁面與圖片載入後畫線
+    if (document.readyState === 'complete') {
+        drawLines();
+    } else {
+        window.addEventListener('load', drawLines);
+    }
+    
     window.addEventListener('resize', drawLines);
 }
 
-// 繪製紅色連線
+// 繪製紅色辦案連線
 function drawLines() {
     const cards = document.querySelectorAll('.avatar-card');
     if (cards.length < 2) return;
@@ -48,9 +52,13 @@ function drawLines() {
     const canvasRect = svgCanvas.getBoundingClientRect();
 
     for (let i = 0; i < cards.length - 1; i++) {
-        const rect1 = cards[i].querySelector('.avatar-img').getBoundingClientRect();
-        const rect2 = cards[i+1].querySelector('.avatar-img').getBoundingClientRect();
+        const img1 = cards[i].querySelector('.avatar-img');
+        const img2 = cards[i+1].querySelector('.avatar-img');
+        
+        const rect1 = img1.getBoundingClientRect();
+        const rect2 = img2.getBoundingClientRect();
 
+        // 計算中心點位置
         const x1 = rect1.left + rect1.width / 2 - canvasRect.left + window.scrollX;
         const y1 = rect1.top + rect1.height / 2 - canvasRect.top + window.scrollY;
         const x2 = rect2.left + rect2.width / 2 - canvasRect.left + window.scrollX;
@@ -70,7 +78,7 @@ function drawLines() {
     }
 }
 
-// 彈窗控制
+// 彈窗功能
 function openModal(imgSrc) {
     wantedImg.src = imgSrc;
     modal.style.display = "flex";
