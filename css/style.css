@@ -1,13 +1,11 @@
 /* 1. 載入自定義 TTF 字體 */
 @font-face {
     font-family: 'MasaFont';
-    /* 路徑：從 css 資料夾跳出來，進入 assets/fonts/ */
     src: url('../assets/fonts/MasaFont-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
-/* 全域設定 */
 body {
     background: url('../assets/images/background.png') no-repeat center center fixed;
     background-size: cover;
@@ -25,17 +23,14 @@ body {
     text-shadow: 4px 4px 12px rgba(0,0,0,0.9);
     letter-spacing: 4px;
     font-weight: bold;
-    color: #f1f1f1;
 }
 
-/* 辦案牆區域 */
 .wall-wrapper {
     position: relative;
     width: 100%;
     min-height: 700px;
 }
 
-/* SVG 連線畫布 */
 #svg-canvas {
     position: absolute;
     top: 0;
@@ -46,65 +41,60 @@ body {
     z-index: 1;
 }
 
-/* 容器佈局 */
 .container {
     position: relative;
     z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 60px;
-    padding: 120px 40px;
+    gap: 50px; /* 縮小間距讓長名字有空間 */
+    padding: 100px 40px;
     flex-wrap: wrap;
 }
 
-/* 角色卡片 */
 .avatar-card {
     position: relative;
     cursor: pointer;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     text-align: center;
+    width: 180px; /* 固定寬度讓排版更穩定 */
 }
 
-/* 上下交錯效果 */
-.avatar-card:nth-child(even) { transform: translateY(90px); }
+.avatar-card:nth-child(even) { transform: translateY(80px); }
 .avatar-card:nth-child(odd) { transform: translateY(-40px); }
 
 .avatar-card:hover {
-    transform: scale(1.15) !important;
+    transform: scale(1.1) !important;
     z-index: 10;
 }
 
-/* 角色頭像圖片 */
 .avatar-img {
-    width: 140px;
-    height: 140px;
+    width: 130px;
+    height: 130px;
     border: 6px solid #fefefe;
-    box-shadow: 8px 8px 20px rgba(0,0,0,0.7);
+    box-shadow: 8px 8px 18px rgba(0,0,0,0.7);
     background-color: #1a1a1a;
     object-fit: cover;
 }
 
-/* 隨機旋轉感 */
-.avatar-card:nth-child(3n) .avatar-img { transform: rotate(4deg); }
-.avatar-card:nth-child(3n+1) .avatar-img { transform: rotate(-3deg); }
+/* 隨機旋轉效果 */
+.avatar-card:nth-child(3n) .avatar-img { transform: rotate(3deg); }
+.avatar-card:nth-child(3n+1) .avatar-img { transform: rotate(-2deg); }
 
-/* 角色名字標籤 */
 .member-name {
     font-family: 'MasaFont', sans-serif;
     margin-top: 15px;
     background: rgba(0, 0, 0, 0.75);
-    padding: 6px 18px;
+    padding: 6px 12px;
     border-radius: 4px;
     display: inline-block;
-    font-size: 22px; /* 字體換了之後通常可以大一點 */
-    font-weight: bold;
+    font-size: 18px;
+    white-space: nowrap; /* 強制名字不換行 */
     color: #ffd700; 
     text-shadow: 1px 1px 2px #000;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* 彈窗樣式 */
 .modal {
     display: none;
     position: fixed;
@@ -114,28 +104,24 @@ body {
     background: rgba(0, 0, 0, 0.92);
     justify-content: center;
     align-items: center;
-    cursor: zoom-out;
 }
 
 .modal-content img {
     max-height: 85vh;
     max-width: 90vw;
     border: 10px solid #eee;
-    box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    animation: pop 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: pop 0.4s ease-out;
 }
 
 @keyframes pop {
-    from { transform: scale(0.7); opacity: 0; }
+    from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
-/* 頁尾 */
 .footer {
     font-family: 'MasaFont', sans-serif;
     text-align: center;
     padding: 100px 0 40px 0;
     color: rgba(255,255,255,0.6);
     font-size: 16px;
-    letter-spacing: 1px;
 }
